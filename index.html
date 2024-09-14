@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Caption Generator</title>
+    <style>
+        /* Your CSS styles */
+        body {
+            background-image: url('https://marketplace.canva.com/EAFCO6pfthY/1/0/1600w/canva-blue-green-watercolor-linktree-background-F2CyNS5sQdM.jpg');
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            flex-direction: column;
+            text-align: center;
+            position: relative;
+        }
+
+        h1 {
+            margin: 10px 0;
+        }
+
+        p {
+            margin: 5px 0;
+            font-size: 24px;
+        }
+
+        form {
+            margin-top: 20px;
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        input[type="file"],
+        input[type="submit"],
+        select {
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            background-color: #359381;
+            color: white;
+            cursor: pointer;
+            border-radius: 15px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"]:hover,
+        select:hover {
+            background-color: #2a7b6e;
+        }
+
+        img {
+            margin-top: 20px;
+        }
+
+        h2 {
+            margin-top: 20px;
+        }
+
+        * {
+            margin : 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px 20px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .logo {
+            margin-right: auto;
+            font-size: 45px;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .navigation a {
+            text-decoration: none;
+            color: #359381;
+            padding: 6px 15px;
+            border-radius: 20px;
+            margin: 0 10px;
+            font-weight: 600;
+        }
+
+        .navigation a:hover,
+        .navigation a.active {
+            background: #359381;
+            color: #050505;
+        }
+
+        .info-box {
+            display: none;
+            margin-top: 20px;
+            margin-bottom: 5px;
+            max-width: 55%; /* Decreased max-width */
+            padding: 2px 60px; /* Increased left and right padding */
+            background-color: transparent; /* Changed background color to transparent */
+            border-radius: 10px;
+            z-index: 999;
+            text-align: left;
+            position: relative;
+        }
+
+        .info-box h2 {
+            margin-bottom: 5px;
+        }
+
+        .info-box p {
+            margin-bottom: 5px;
+        }
+   
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="logo">CGen</h1>
+        <nav class="navigation">
+            <a href="#" class="active" onclick="returnToHome(this);">Home</a>
+            <a href="#" onclick="toggleInfo('aboutInfo'); activateButton(this);">About</a>
+            <a href="#" onclick="toggleInfo('featuresInfo'); activateButton(this);">Features</a>
+        </nav>
+    </header>
+    <h1>Image Caption Generator</h1>
+    <p>Generate captions to your image</p>
+
+    <form id="imageForm" action="/" method="POST" enctype="multipart/form-data">
+        <input type="file" name="image">
+        <select name="tone">
+            <option value="">select tone</option>
+            <option value="fun">Fun</option>
+            <option value="accurate">Accurate</option>
+            <option value="joke">Joke</option>
+            <option value="serious">Serious</option>
+            <option value="happy">Happy</option>
+            <option value="formal">Formal</option>
+            <option value="professional">Professional</option>
+            <option value="excitement">Excitement</option>
+            <option value="adventurous">Adventurous</option>
+            <option value="mysterious">Mysterious</option>
+            <option value="relaxed">Relaxed</option>
+        </select>
+        <input type="submit" value="Generate Caption" style="width: 100%;">
+    </form>
+
+    <div id="resultContainer">
+        {% if image %}
+        <h2>Image</h2>
+        <img src="data:image/jpeg;base64,{{ image }}" height="200" width="200", padding="20">
+        {% endif %}
+
+        {% if caption %}
+        <h2>Caption</h2>
+        <p>"{{ caption }}"</p>
+        {% endif %}
+
+        {% if generation_message %}
+        <p><i>{{ generation_message }}</i></p>
+        {% endif %}
+    </div>
+
+    <!-- Your HTML content -->
+
+    <div id="aboutInfo" class="info-box"> <!-- Removed transparent-bg class -->
+        <h2>About</h2>
+        <p>The Image Caption Generator is an advanced tool that leverages artificial intelligence to automatically generate captions for images. It provides a seamless experience, enabling users to create informative and engaging descriptions effortlessly, ensuring that their audience comprehends the narrative conveyed by their images. Remarkably, this tool is completely free, requiring no login, and is designed for easy accessibility, making it an invaluable asset for content creators, businesses, and individuals seeking to enhance the impact of their visual content.
+
+        </p>
+    </div>
+
+    <div id="featuresInfo" class="info-box"> <!-- Removed transparent-bg class -->
+        <h2>Features</h2>
+        <p>Our Image Caption Generator utilizes AI and computer vision to analyze and understand your images. Upload your photo, select a caption tone, and add any relevant details to assist the AI in creating accurate descriptions. While the AI identifies the content of the image, adding information about people or locations in the photo helps in crafting more meaningful captions. Whether you're looking for creative captions for social media, engaging blog post descriptions, or effective image ALT text, this tool is incredibly versatile. It's free to use, and no account is needed, making it an invaluable tool for your digital content strategy.</p>
+        
+
+        <br>
+        <!-- Benefits paragraph placed inside the featuresInfo div -->
+        <div id="benefits">
+            <h2>Benefits of Image Caption Generator</h2>
+            <p>1. Time Efficiency: The automation of image caption generation saves considerable time and effort, especially in scenarios involving a large volume of visual content. This efficiency allows content creators to focus on other critical aspects of their work while ensuring that images are well-documented.</p>
+            <br> <p>2. Consistency: Image Caption Generator ensures the consistency of image descriptions, minimizing the risk of human error and maintaining a uniform standard of textual representation across various platforms and content types.</p>
+            <br><p>3. Multilingual Support: Advanced Image Caption Generators are equipped with multilingual capabilities, enabling the generation of descriptive captions in multiple languages. This feature is vital for global businesses and organizations aiming to reach diverse audiences.</p>
+            <br><p>4. Innovation in Accessibility: By providing detailed and meaningful image descriptions, Image Caption Generator contributes to the advancement of accessibility standards, driving progress toward a more inclusive digital landscape.</p>
+            <br><p>5. Content Personalization: With the ability to tailor image captions based on specific contexts and audience preferences, Image Caption Generators facilitate personalized user experiences, ultimately strengthening brand-consumer relationships.</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleInfo(infoId) {
+            var infoBox = document.getElementById(infoId);
+
+            // Hide all info-boxes by default
+            var infoBoxes = document.querySelectorAll('.info-box');
+            infoBoxes.forEach(function(box) {
+                box.style.display = 'none';
+            });
+
+            if (infoBox.style.display === "none") {
+                infoBox.style.display = "block";
+            } else {
+                infoBox.style.display = "none";
+            }
+
+            // Scroll to the info box if it's the 'aboutInfo' or 'featuresInfo'
+            if (infoId === 'aboutInfo' || infoId === 'featuresInfo') {
+                infoBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function activateButton(button) {
+            // Remove 'active' class from all navigation links
+            var navLinks = document.querySelectorAll('.navigation a');
+            navLinks.forEach(function(link) {
+                link.classList.remove('active');
+            });
+
+            // Add 'active' class to the clicked button
+            button.classList.add('active');
+        }
+
+        function returnToHome(button) {
+            // Activate the 'Home' button
+            activateButton(button);
+
+            // Hide all info-boxes
+            var infoBoxes = document.querySelectorAll('.info-box');
+            infoBoxes.forEach(function(box) {
+                box.style.display = 'none';
+            });
+        }
+
+        function removeResultContainer() {
+            setTimeout(function() {
+                var resultContainer = document.getElementById("resultContainer");
+                if (resultContainer) {
+                    resultContainer.remove();
+                }
+            }, 20000); // 20 seconds
+        }
+        removeResultContainer();
+    </script>
+
+</body>
+</html>
